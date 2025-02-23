@@ -37,7 +37,7 @@ export function Chat({
       window.history.replaceState({}, '', `/search/${id}`)
     },
     onError: error => {
-      toast.error(`Error in chat: ${error.message}`)
+      toast.error(`Klaida pokalbyje: ${error.message}`)
     },
     sendExtraMessageFields: false // Disable extra message fields
   })

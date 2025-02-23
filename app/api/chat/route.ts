@@ -14,10 +14,13 @@ export async function POST(req: Request) {
     const isSharePage = referer?.includes('/share/')
 
     if (isSharePage) {
-      return new Response('Chat API is not available on share pages', {
-        status: 403,
-        statusText: 'Forbidden'
-      })
+      return new Response(
+        'Pokalbių API negalima naudoti bendrinamuose puslapiuose',
+        {
+          status: 403,
+          statusText: 'Forbidden'
+        }
+      )
     }
 
     const cookieStore = await cookies()
@@ -26,7 +29,7 @@ export async function POST(req: Request) {
     const model = modelFromCookie || DEFAULT_MODEL
     const provider = model.split(':')[0]
     if (!isProviderEnabled(provider)) {
-      return new Response(`Selected provider is not enabled ${provider}`, {
+      return new Response(`Pasirinktas teikėjas neįgalintas ${provider}`, {
         status: 404,
         statusText: 'Not Found'
       })
@@ -51,10 +54,7 @@ export async function POST(req: Request) {
     console.error('API route error:', error)
     return new Response(
       JSON.stringify({
-        error:
-          error instanceof Error
-            ? error.message
-            : 'An unexpected error occurred',
+        error: error instanceof Error ? error.message : 'Įvyko netikėta klaida',
         status: 500
       }),
       {

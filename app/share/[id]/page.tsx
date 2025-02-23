@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation'
 import { Chat } from '@/components/chat'
 import { getSharedChat } from '@/lib/actions/chat'
 import { convertToUIMessages } from '@/lib/utils'
+import { notFound } from 'next/navigation'
 
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>
@@ -14,7 +14,7 @@ export async function generateMetadata(props: {
   }
 
   return {
-    title: chat?.title.toString().slice(0, 50) || 'Search'
+    title: chat?.title.toString().slice(0, 50) || 'Paieška'
   }
 }
 

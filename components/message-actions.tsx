@@ -26,7 +26,7 @@ export function MessageActions({
   })
   async function handleCopy() {
     await navigator.clipboard.writeText(message)
-    toast.success('Message copied to clipboard')
+    toast.success('Žinutė nukopijuota į iškarpinę')
   }
 
   if (isLoading) {

@@ -3,20 +3,20 @@ import { ArrowRight } from 'lucide-react'
 
 const exampleMessages = [
   {
-    heading: 'What is DeepSeek R1?',
-    message: 'What is DeepSeek R1?'
+    heading: 'Kas yra DeepSeek R1?',
+    message: 'Kas yra DeepSeek R1?'
   },
   {
-    heading: 'Why is Nvidia growing rapidly?',
-    message: 'Why is Nvidia growing rapidly?'
+    heading: 'Kodėl Nvidia sparčiai auga?',
+    message: 'Kodėl Nvidia sparčiai auga?'
   },
   {
-    heading: 'Tesla vs Rivian',
-    message: 'Tesla vs Rivian'
+    heading: 'Tesla prieš Rivian',
+    message: 'Tesla prieš Rivian'
   },
   {
-    heading: 'Summary: https://arxiv.org/pdf/2501.05707',
-    message: 'Summary: https://arxiv.org/pdf/2501.05707'
+    heading: 'Santrauka: https://arxiv.org/pdf/2501.05707',
+    message: 'Santrauka: https://arxiv.org/pdf/2501.05707'
   }
 ]
 export function EmptyScreen({

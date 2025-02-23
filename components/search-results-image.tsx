@@ -3,14 +3,6 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
-import {
   Carousel,
   type CarouselApi,
   CarouselContent,
@@ -18,9 +10,17 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel'
-import { useEffect, useState } from 'react'
-import { PlusCircle } from 'lucide-react'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import { SearchResultImage } from '@/lib/types'
+import { PlusCircle } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 interface SearchResultsImageSectionProps {
   images: SearchResultImage[]
@@ -57,7 +57,7 @@ export const SearchResultsImageSection: React.FC<
   }, [api, selectedIndex])
 
   if (!images || images.length === 0) {
-    return <div className="text-muted-foreground">No images found</div>
+    return <div className="text-muted-foreground">Paveikslėlių nerasta</div>
   }
 
   // If enabled the include_images_description is true, the images will be an array of { url: string, description: string }
@@ -86,14 +86,18 @@ export const SearchResultsImageSection: React.FC<
                   {image ? (
                     <img
                       src={image.url}
-                      alt={`Image ${index + 1}`}
+                      alt={`Paveikslėlis ${index + 1}`}
                       className="h-full w-full object-cover"
                       onError={e =>
                         (e.currentTarget.src = '/images/placeholder-image.png')
                       }
                     />
                   ) : (
-                    <div className="w-full h-full bg-muted animate-pulse" />
+                    <div
+                      className="w-full h-full bg-muted animate-pulse"
+                      aria-label="Kraunamas paveikslėlis"
+                      role="img"
+                    />
                   )}
                 </CardContent>
               </Card>
@@ -106,7 +110,7 @@ export const SearchResultsImageSection: React.FC<
           </DialogTrigger>
           <DialogContent className="sm:max-w-3xl max-h-[80vh] overflow-auto">
             <DialogHeader>
-              <DialogTitle>Search Images</DialogTitle>
+              <DialogTitle>Paveikslėlių paieška</DialogTitle>
               <DialogDescription className="text-sm">{query}</DialogDescription>
             </DialogHeader>
             <div className="py-4">
@@ -120,7 +124,7 @@ export const SearchResultsImageSection: React.FC<
                       <div className="p-1 flex items-center justify-center h-full">
                         <img
                           src={img.url}
-                          alt={`Image ${idx + 1}`}
+                          alt={`Paveikslėlis ${idx + 1}`}
                           className="h-auto w-full object-contain max-h-[60vh]"
                           onError={e =>
                             (e.currentTarget.src =
@@ -133,15 +137,22 @@ export const SearchResultsImageSection: React.FC<
                 </CarouselContent>
                 <div className="absolute inset-8 flex items-center justify-between p-4">
                   <CarouselPrevious className="w-10 h-10 rounded-full shadow focus:outline-none">
-                    <span className="sr-only">Previous</span>
+                    <span className="sr-only">Ankstesnis</span>
                   </CarouselPrevious>
                   <CarouselNext className="w-10 h-10 rounded-full shadow focus:outline-none">
-                    <span className="sr-only">Next</span>
+                    <span className="sr-only">Kitas</span>
                   </CarouselNext>
                 </div>
               </Carousel>
               <div className="py-2 text-center text-sm text-muted-foreground">
-                {current} of {count}
+                {current} iš {count}{' '}
+                {count === 1
+                  ? 'paveikslėlio'
+                  : count % 10 === 0 ||
+                    (count % 10 >= 5 && count % 10 <= 9) ||
+                    (count >= 11 && count <= 19)
+                  ? 'paveikslėlių'
+                  : 'paveikslėliai'}
               </div>
             </div>
           </DialogContent>

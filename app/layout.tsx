@@ -13,12 +13,12 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Morphic'
+const title = 'Istatym.ai'
 const description =
-  'A fully open-source AI-powered answer engine with a generative UI.'
+  'Visiškai atviro kodo dirbtinio intelekto atsakymų variklis su generatyvia vartotojo sąsaja.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://morphic.sh'),
+  metadataBase: new URL('https://istatym.ai'),
   title,
   description,
   openGraph: {
@@ -48,7 +48,7 @@ export default function RootLayout({
   const enableSaveChatHistory =
     process.env.NEXT_PUBLIC_ENABLE_SAVE_CHAT_HISTORY === 'true'
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="lt" suppressHydrationWarning>
       <body className={cn('font-sans antialiased', fontSans.variable)}>
         <ThemeProvider
           attribute="class"
