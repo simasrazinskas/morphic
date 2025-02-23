@@ -23,7 +23,7 @@ export function SearchModeToggle() {
 
   return (
     <Toggle
-      aria-label="Toggle search mode"
+      aria-label="Perjungti paieškos režimą"
       pressed={isSearchMode}
       onPressedChange={handleSearchModeChange}
       variant="outline"
@@ -36,7 +36,7 @@ export function SearchModeToggle() {
       )}
     >
       <Globe className="size-4" />
-      <span className="text-xs">Search</span>
+      <span className="text-xs">Paieška</span>
     </Toggle>
   )
 }

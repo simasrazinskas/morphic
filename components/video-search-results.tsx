@@ -1,17 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { CardContent, Card } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Card, CardContent } from '@/components/ui/card'
 import {
   Carousel,
   type CarouselApi,
@@ -20,8 +11,17 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import { SerperSearchResultItem, SerperSearchResults } from '@/lib/types'
 import { PlusCircle } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
 export interface VideoSearchResultsProps {
   results: SerperSearchResults
@@ -67,7 +67,7 @@ export function VideoSearchResults({ results }: VideoSearchResultsProps) {
   }, [api, selectedIndex])
 
   if (!results.videos || results.videos.length === 0) {
-    return <div className="text-muted-foreground">No videos found</div>
+    return <div className="text-muted-foreground">Vaizdo įrašų nerasta</div>
   }
 
   return (
@@ -117,7 +117,7 @@ export function VideoSearchResults({ results }: VideoSearchResultsProps) {
           </DialogTrigger>
           <DialogContent className="sm:max-w-3xl max-h-[80vh] overflow-auto">
             <DialogHeader>
-              <DialogTitle>Search Videos</DialogTitle>
+              <DialogTitle>Vaizdo įrašų paieška</DialogTitle>
               <DialogDescription className="text-sm">
                 {results.searchParameters.q}
               </DialogDescription>
@@ -139,7 +139,7 @@ export function VideoSearchResults({ results }: VideoSearchResultsProps) {
                             }}
                             src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1`}
                             className="w-full aspect-video"
-                            title={video.title}
+                            title={`Vaizdo įrašas: ${video.title}`}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowFullScreen
                           />
@@ -150,16 +150,23 @@ export function VideoSearchResults({ results }: VideoSearchResultsProps) {
                 </CarouselContent>
                 <div className="absolute inset-8 flex items-center justify-between p-4 pointer-events-none">
                   <CarouselPrevious className="w-10 h-10 rounded-full shadow focus:outline-none pointer-events-auto">
-                    <span className="sr-only">Previous</span>
+                    <span className="sr-only">Ankstesnis</span>
                   </CarouselPrevious>
                   <CarouselNext className="w-10 h-10 rounded-full shadow focus:outline-none pointer-events-auto">
-                    <span className="sr-only">Next</span>
+                    <span className="sr-only">Kitas</span>
                   </CarouselNext>
                 </div>
               </Carousel>
               <div className="py-2">
                 <div className="text-center text-sm text-muted-foreground">
-                  {current} of {count}
+                  {current} iš {count}{' '}
+                  {count === 1
+                    ? 'vaizdo įrašo'
+                    : count % 10 === 0 ||
+                      (count % 10 >= 5 && count % 10 <= 9) ||
+                      (count >= 11 && count <= 19)
+                    ? 'vaizdo įrašų'
+                    : 'vaizdo įrašai'}
                 </div>
               </div>
             </div>

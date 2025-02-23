@@ -35,12 +35,12 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
     })
     const result = await shareChat(chatId)
     if (!result) {
-      toast.error('Failed to share chat')
+      toast.error('Nepavyko pasidalinti pokalbiu')
       return
     }
 
     if (!result.sharePath) {
-      toast.error('Could not copy link to clipboard')
+      toast.error('Nepavyko nukopijuoti nuorodos į iškarpinę')
       return
     }
 
@@ -51,10 +51,10 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
   const handleCopy = () => {
     if (shareUrl) {
       copyToClipboard(shareUrl)
-      toast.success('Link copied to clipboard')
+      toast.success('Nuoroda nukopijuota į iškarpinę')
       setOpen(false)
     } else {
-      toast.error('No link to copy')
+      toast.error('Nėra nuorodos kopijavimui')
     }
   }
 
@@ -78,20 +78,21 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Share link to search result</DialogTitle>
+            <DialogTitle>Pasidalinti paieškos rezultatu</DialogTitle>
             <DialogDescription>
-              Anyone with the link will be able to view this search result.
+              Kiekvienas turintis nuorodą galės peržiūrėti šį paieškos
+              rezultatą.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="items-center">
             {!shareUrl && (
               <Button onClick={handleShare} disabled={pending} size="sm">
-                {pending ? <Spinner /> : 'Get link'}
+                {pending ? <Spinner /> : 'Gauti nuorodą'}
               </Button>
             )}
             {shareUrl && (
               <Button onClick={handleCopy} disabled={pending} size="sm">
-                {'Copy link'}
+                {'Kopijuoti nuorodą'}
               </Button>
             )}
           </DialogFooter>

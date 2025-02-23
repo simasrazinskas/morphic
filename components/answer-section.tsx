@@ -24,7 +24,7 @@ export function AnswerSection({
   const header = (
     <div className="flex items-center gap-1">
       <Text size={16} />
-      <div>Answer</div>
+      <div>Atsakymas</div>
     </div>
   )
   const message = content ? (

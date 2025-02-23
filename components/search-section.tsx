@@ -61,7 +61,7 @@ export function SearchSection({
       {isLoading && isToolLoading ? (
         <SearchSkeleton />
       ) : searchResults?.results ? (
-        <Section title="Sources">
+        <Section title="Šaltiniai">
           <SearchResults results={searchResults.results} />
         </Section>
       ) : null}

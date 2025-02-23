@@ -1,15 +1,14 @@
-import { NextResponse } from 'next/server'
+import {
+  SearXNGResponse,
+  SearXNGResult,
+  SearXNGSearchResults,
+  SearchResultItem
+} from '@/lib/types'
+import { Redis } from '@upstash/redis'
 import http from 'http'
 import https from 'https'
 import { JSDOM, VirtualConsole } from 'jsdom'
-import {
-  SearXNGSearchResults,
-  SearXNGResponse,
-  SearXNGResult,
-  SearchResultItem
-} from '@/lib/types'
-import { Agent } from 'http'
-import { Redis } from '@upstash/redis'
+import { NextResponse } from 'next/server'
 import { createClient } from 'redis'
 
 /**
@@ -158,7 +157,7 @@ export async function POST(request: Request) {
     console.error('Advanced search error:', error)
     return NextResponse.json(
       {
-        message: 'Internal Server Error',
+        message: 'Vidinė serverio klaida',
         error: error instanceof Error ? error.message : String(error),
         query: query,
         results: [],
@@ -225,7 +224,7 @@ async function advancedSearchXNGSearch(
 
     if (!data || !Array.isArray(data.results)) {
       console.error('Invalid response structure from SearXNG:', data)
-      throw new Error('Invalid response structure from SearXNG')
+      throw new Error('Netinkama SearXNG atsakymo struktūra')
     }
 
     let generalResults = data.results.filter(
@@ -391,7 +390,7 @@ async function crawlPage(
     console.error(`Error crawling ${result.url}:`, error)
     return {
       ...result,
-      content: result.content || 'Content unavailable due to crawling error.'
+      content: result.content || 'Turinys nepasiekiamas dėl klaidos.'
     }
   }
 }
