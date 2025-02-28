@@ -18,12 +18,12 @@ function groupModelsByProvider(models: Model[]) {
 export function ModelSelector() {
   const [open, setOpen] = useState(false)
   const [selectedModelId, setSelectedModelId] = useState<string>(
-    'claude-3-5-sonnet-latest'
+    'anthropic:claude-3-5-sonnet-latest'
   )
 
   useEffect(() => {
-    // Set Claude 3.5 Sonnet as default
-    setCookie('selected-model', 'claude-3-5-sonnet-latest')
+    // Set Claude 3.5 Sonnet as default with provider prefix
+    setCookie('selected-model', 'anthropic:claude-3-5-sonnet-latest')
   }, [])
 
   // Hidden UI, but still maintaining the model selection functionality
