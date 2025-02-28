@@ -1,6 +1,4 @@
-import { Button } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
-
+// Keep the example messages array for reference
 const exampleMessages = [
   {
     heading: 'Kas yra DeepSeek R1?',
@@ -19,6 +17,7 @@ const exampleMessages = [
     message: 'Santrauka: https://arxiv.org/pdf/2501.05707'
   }
 ]
+
 export function EmptyScreen({
   submitMessage,
   className
@@ -26,6 +25,10 @@ export function EmptyScreen({
   submitMessage: (message: string) => void
   className?: string
 }) {
+  // Return null to hide the component
+  return null
+
+  /* Original rendering code kept as comments
   return (
     <div className={`mx-auto w-full transition-all ${className}`}>
       <div className="bg-background p-2">
@@ -48,4 +51,5 @@ export function EmptyScreen({
       </div>
     </div>
   )
+  */
 }

@@ -1,22 +1,8 @@
 'use client'
 
-import { Model, models } from '@/lib/types/models'
-import { getCookie, setCookie } from '@/lib/utils/cookies'
-import { isReasoningModel } from '@/lib/utils/registry'
-import { Check, ChevronsUpDown, Lightbulb } from 'lucide-react'
-import Image from 'next/image'
+import { Model } from '@/lib/types/models'
+import { setCookie } from '@/lib/utils/cookies'
 import { useEffect, useState } from 'react'
-import { createModelId } from '../lib/utils'
-import { Button } from './ui/button'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList
-} from './ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
 function groupModelsByProvider(models: Model[]) {
   return models.reduce((groups, model) => {
@@ -31,15 +17,19 @@ function groupModelsByProvider(models: Model[]) {
 
 export function ModelSelector() {
   const [open, setOpen] = useState(false)
-  const [selectedModelId, setSelectedModelId] = useState<string>('')
+  const [selectedModelId, setSelectedModelId] = useState<string>(
+    'claude-3-5-sonnet-latest'
+  )
 
   useEffect(() => {
-    const savedModel = getCookie('selected-model')
-    if (savedModel) {
-      setSelectedModelId(savedModel)
-    }
+    // Set Claude 3.5 Sonnet as default
+    setCookie('selected-model', 'claude-3-5-sonnet-latest')
   }, [])
 
+  // Hidden UI, but still maintaining the model selection functionality
+  return null
+
+  /* Original UI code kept as comments
   const handleModelSelect = (id: string) => {
     setSelectedModelId(id === selectedModelId ? '' : id)
     setCookie('selected-model', id)
@@ -123,4 +113,5 @@ export function ModelSelector() {
       </PopoverContent>
     </Popover>
   )
+  */
 }
