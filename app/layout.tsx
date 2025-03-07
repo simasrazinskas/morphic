@@ -14,8 +14,7 @@ const fontSans = FontSans({
 })
 
 const title = 'Istatym.ai'
-const description =
-  'Visiškai atviro kodo dirbtinio intelekto atsakymų variklis su generatyvia vartotojo sąsaja.'
+const description = 'Paklausk įstatymų'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://istatym.ai'),

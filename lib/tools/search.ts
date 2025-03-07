@@ -13,16 +13,20 @@ import Exa from 'exa-js'
 export const searchTool = tool({
   description: 'Search the web for information',
   parameters: searchSchema,
-  execute: async ({
-    query,
-    max_results,
-    search_depth,
-    include_domains,
-    exclude_domains
-  }) => {
+  execute: async (
+    { query, max_results, search_depth, include_domains, exclude_domains },
+    { messages, toolCallId } = { messages: [], toolCallId: 'search' }
+  ) => {
     // Tavily API requires a minimum of 5 characters in the query
     const filledQuery =
       query.length < 5 ? query + ' '.repeat(5 - query.length) : query
+
+    // Get the last user message content to use as originalPrompt
+    const lastUserMessage =
+      messages.filter(m => m.role === 'user').pop()?.content || ''
+    const originalPrompt =
+      typeof lastUserMessage === 'string' ? lastUserMessage : ''
+
     let searchResult: SearchResults
 
     try {
@@ -35,7 +39,8 @@ export const searchTool = tool({
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            prompt: query
+            prompt: query,
+            originalPrompt: originalPrompt || query
           })
         }
       )
@@ -82,7 +87,8 @@ export async function search(
   maxResults: number = 10,
   searchDepth: 'basic' | 'advanced' = 'basic',
   includeDomains: string[] = [],
-  excludeDomains: string[] = []
+  excludeDomains: string[] = [],
+  messages: any[] = []
 ): Promise<SearchResults> {
   return searchTool.execute(
     {
@@ -94,7 +100,7 @@ export async function search(
     },
     {
       toolCallId: 'search',
-      messages: []
+      messages: messages
     }
   )
 }

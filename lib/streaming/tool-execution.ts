@@ -92,7 +92,8 @@ export async function executeToolCall(
     toolCall.parameters?.max_results,
     toolCall.parameters?.search_depth as 'basic' | 'advanced',
     toolCall.parameters?.include_domains ?? [],
-    toolCall.parameters?.exclude_domains ?? []
+    toolCall.parameters?.exclude_domains ?? [],
+    coreMessages
   )
 
   const updatedToolCallAnnotation = {
