@@ -24,53 +24,43 @@ export const searchTool = tool({
     const filledQuery =
       query.length < 5 ? query + ' '.repeat(5 - query.length) : query
     let searchResult: SearchResults
-    const searchAPI =
-      (process.env.SEARCH_API as 'tavily' | 'exa' | 'searxng') || 'tavily'
-
-    const effectiveSearchDepth =
-      searchAPI === 'searxng' &&
-      process.env.SEARXNG_DEFAULT_DEPTH === 'advanced'
-        ? 'advanced'
-        : search_depth || 'basic'
-
-    console.log(
-      `Using search API: ${searchAPI}, Search Depth: ${effectiveSearchDepth}`
-    )
 
     try {
-      if (searchAPI === 'searxng' && effectiveSearchDepth === 'advanced') {
-        // API route for advanced SearXNG search
-        const baseUrl =
-          process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-        const response = await fetch(`${baseUrl}/api/advanced-search`, {
+      // Call the webhook with the search query
+      const response = await fetch(
+        'https://auto.tivis.lt/webhook/c5ddb35f-0a4f-4d85-93a3-24bf8bacd2fd',
+        {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({
-            query: filledQuery,
-            maxResults: max_results,
-            searchDepth: effectiveSearchDepth,
-            includeDomains: include_domains,
-            excludeDomains: exclude_domains
+            prompt: query
           })
-        })
-        if (!response.ok) {
-          throw new Error(
-            `Advanced search API error: ${response.status} ${response.statusText}`
-          )
         }
-        searchResult = await response.json()
-      } else {
-        searchResult = await (searchAPI === 'tavily'
-          ? tavilySearch
-          : searchAPI === 'exa'
-          ? exaSearch
-          : searxngSearch)(
-          filledQuery,
-          max_results,
-          effectiveSearchDepth === 'advanced' ? 'advanced' : 'basic',
-          include_domains,
-          exclude_domains
+      )
+
+      if (!response.ok) {
+        throw new Error(
+          `Webhook API error: ${response.status} ${response.statusText}`
         )
+      }
+
+      // Process the webhook response
+      const webhookResults = await response.json()
+
+      // Transform webhook response to expected SearchResults format
+      searchResult = {
+        results: webhookResults
+          .map((item: any) => ({
+            title: `Result ${item.score.toFixed(2)}`,
+            url: item.document.metadata.source || 'https://tivis.lt',
+            content: item.document.pageContent
+          }))
+          .slice(0, max_results || 10),
+        query: filledQuery,
+        images: [],
+        number_of_results: webhookResults.length
       }
     } catch (error) {
       console.error('Search API error:', error)
