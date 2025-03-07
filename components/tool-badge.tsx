@@ -1,5 +1,5 @@
-import React from 'react'
 import { Link, Search, Video } from 'lucide-react'
+import React from 'react'
 import { Badge } from './ui/badge'
 
 type ToolBadgeProps = {
@@ -14,15 +14,17 @@ export const ToolBadge: React.FC<ToolBadgeProps> = ({
   className
 }) => {
   const icon: Record<string, React.ReactNode> = {
-    search: <Search size={14} />,
-    retrieve: <Link size={14} />,
-    video_search: <Video size={14} />
+    search: <Search size={10} />,
+    retrieve: <Link size={10} />,
+    video_search: <Video size={10} />
   }
 
   return (
     <Badge className={className} variant={'secondary'}>
       {icon[tool]}
-      <span className="ml-1">{children}</span>
+      <span className="ml-1 text-[8px] leading-tight sm:text-xs md:leading-normal">
+        {children}
+      </span>
     </Badge>
   )
 }
