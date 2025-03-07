@@ -16,10 +16,11 @@ export function Citing({
 }: CustomLinkProps) {
   const childrenText = children?.toString() || ''
   const isNumber = /^\d+$/.test(childrenText)
+
+  // Hide citation icons by using a single style for all links
+  // Previously, isNumber links had special styling
   const linkClasses = cn(
-    isNumber
-      ? 'text-[10px] bg-muted text-muted-froreground rounded-full w-4 h-4 px-0.5 inline-flex items-center justify-center hover:bg-muted/50 duration-200 no-underline -translate-y-0.5'
-      : 'hover:underline inline-flex items-center gap-1.5',
+    'hidden', // Hide all citations completely
     className
   )
 
